@@ -342,7 +342,13 @@ textarea { resize: vertical; line-height: 1.4; }
   .settings-layout { grid-template-columns: 1fr; }
   .analytics-totals { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
   .analytics-filters { grid-template-columns: minmax(0, 1fr); }
-  .analytics-filters input[type="date"] { min-height: 44px; }
+  .analytics-filters input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+    justify-self: stretch;
+    width: auto;
+    min-height: 44px;
+  }
   .analytics-chart .chart-heading h2 { font-size: 17px; }
 }
 
