@@ -1,0 +1,132 @@
+{
+  "kind": {
+    "ru": "Демонстрационные данные",
+    "en": "Demo data"
+  },
+  "asOf": "2026-10-30T12:00:00Z",
+  "rules": {
+    "minImpressionsPerPeriod": 5000,
+    "minInstallsPerPeriod": 10,
+    "requiredConsecutiveClosedPeriods": 2
+  },
+  "campaigns": [
+    {
+      "id": "survival-october",
+      "gameId": "survivalist-invasion",
+      "themeId": "halloween",
+      "channel": {
+        "ru": "Мобильная лента",
+        "en": "Mobile feed"
+      },
+      "audience": {
+        "ru": "Новые игроки · одна демоаудитория",
+        "en": "New players · shared demo audience"
+      },
+      "objective": {
+        "ru": "Установки",
+        "en": "Installs"
+      },
+      "flightStart": "2026-10-20",
+      "flightEnd": "2026-10-31"
+    },
+    {
+      "id": "stories-october",
+      "gameId": "stories-your-choice",
+      "themeId": "halloween",
+      "channel": {
+        "ru": "Мобильная лента",
+        "en": "Mobile feed"
+      },
+      "audience": {
+        "ru": "Новые игроки · любители интерактивных историй",
+        "en": "New players · interactive fiction fans"
+      },
+      "objective": {
+        "ru": "Установки",
+        "en": "Installs"
+      },
+      "flightStart": "2026-10-29",
+      "flightEnd": "2026-10-31"
+    }
+  ],
+  "ads": [
+    {
+      "id": "demo-tower-a",
+      "label": {
+        "ru": "Вышка · разведчица",
+        "en": "Watchtower · scout"
+      },
+      "copyId": "survival-ha-light",
+      "characterId": "survival-scout",
+      "status": "live",
+      "campaignId": "survival-october",
+      "creativeLocale": "ru"
+    },
+    {
+      "id": "demo-tower-b",
+      "label": {
+        "ru": "Вышка · без персонажа",
+        "en": "Watchtower · landscape"
+      },
+      "copyId": "survival-ha-light",
+      "characterId": null,
+      "status": "live",
+      "campaignId": "survival-october",
+      "creativeLocale": "ru"
+    },
+    {
+      "id": "demo-harbour-c",
+      "campaignId": "stories-october",
+      "label": {
+        "ru": "Порт · капитанка",
+        "en": "Harbor · captain"
+      },
+      "copyId": "stories-ha-captain",
+      "characterId": "stories-captain",
+      "status": "live",
+      "creativeLocale": "en"
+    }
+  ],
+  "periods": [
+    {
+      "date": "2026-10-28",
+      "closed": true,
+      "adId": "demo-tower-a",
+      "impressions": 10000,
+      "clicks": 200,
+      "installs": 20
+    },
+    {
+      "date": "2026-10-28",
+      "closed": true,
+      "adId": "demo-tower-b",
+      "impressions": 10000,
+      "clicks": 120,
+      "installs": 40
+    },
+    {
+      "date": "2026-10-29",
+      "closed": true,
+      "adId": "demo-tower-a",
+      "impressions": 10000,
+      "clicks": 200,
+      "installs": 20
+    },
+    {
+      "date": "2026-10-29",
+      "closed": true,
+      "adId": "demo-tower-b",
+      "impressions": 10000,
+      "clicks": 120,
+      "installs": 40
+    },
+    {
+      "date": "2026-10-29",
+      "closed": true,
+      "adId": "demo-harbour-c",
+      "impressions": 900,
+      "clicks": 27,
+      "installs": 2
+    }
+  ]
+}

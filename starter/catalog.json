@@ -1,0 +1,353 @@
+{
+  "locales": [
+    "ru",
+    "en"
+  ],
+  "defaultLocale": "ru",
+  "publisher": "GamesBoost42",
+  "publisherCatalog": "https://gamesboost42.games/",
+  "editorialNote": {
+    "ru": "Самостоятельные рекламные концепции для демонстрации. Иллюстрации и персонажи созданы для прототипа. Сюжеты объявлений художественные. Официальные внутриигровые события и условия акций указывает маркетолог в брифе.",
+    "en": "Original ad concepts for this demo. The illustrations, characters and scenes were created for the prototype. Marketers supply any official in-game events and promotion terms in the brief."
+  },
+  "format": {
+    "channel": {
+      "ru": "Мобильная лента",
+      "en": "Mobile feed"
+    },
+    "width": 1080,
+    "height": 1080,
+    "objective": {
+      "ru": "Установки",
+      "en": "Installs"
+    },
+    "currency": "EUR"
+  },
+  "games": [
+    {
+      "id": "survivalist-invasion",
+      "title": "Survivalist: Invasion",
+      "description": {
+        "ru": "Выживание, поиск припасов и строительство базы.",
+        "en": "Explore, scavenge for supplies and build a base to survive."
+      },
+      "characters": [
+        "survival-scout"
+      ]
+    },
+    {
+      "id": "stories-your-choice",
+      "title": "Stories: Your Choice",
+      "description": {
+        "ru": "Интерактивные истории с выбором, в том числе пиратские приключения и вестерны.",
+        "en": "Shape interactive stories, from pirate adventures to tales of the Wild West."
+      },
+      "characters": [
+        "stories-captain",
+        "stories-cowboy"
+      ]
+    }
+  ],
+  "themes": [
+    {
+      "id": "halloween",
+      "title": {
+        "ru": "Хэллоуин",
+        "en": "Halloween"
+      }
+    },
+    {
+      "id": "new-year",
+      "title": {
+        "ru": "Новый год",
+        "en": "New Year"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "survival-halloween",
+      "gameId": "survivalist-invasion",
+      "themeId": "halloween",
+      "title": {
+        "ru": "Сторожевая вышка",
+        "en": "The old watchtower"
+      },
+      "file": "art/survival-halloween.png",
+      "alt": {
+        "ru": "В окне старой вышки над укрытием горит свет. Доски и хвоя блестят после дождя.",
+        "en": "A light glows in a watchtower above a makeshift shelter. Rain glistens on the boards and pine needles."
+      }
+    },
+    {
+      "id": "survival-newyear",
+      "gameId": "survivalist-invasion",
+      "themeId": "new-year",
+      "title": {
+        "ru": "Заснеженная база",
+        "en": "Snowbound base"
+      },
+      "file": "art/survival-newyear.png",
+      "alt": {
+        "ru": "Тёплый свет из двери горной метеостанции падает на снег. Под навесом горит гирлянда.",
+        "en": "Warm light spills from a mountain weather station onto the snow. String lights hang under the eaves."
+      }
+    },
+    {
+      "id": "stories-halloween",
+      "gameId": "stories-your-choice",
+      "themeId": "halloween",
+      "title": {
+        "ru": "Порт в ночь маскарада",
+        "en": "Masquerade harbor"
+      },
+      "file": "art/stories-halloween.png",
+      "alt": {
+        "ru": "В сумерках у деревянного причала стоит парусник. Мокрые доски отражают оранжевые фонари.",
+        "en": "A sailing ship rests at a wooden pier at dusk. Amber lanterns reflect off the wet planks."
+      }
+    },
+    {
+      "id": "stories-newyear",
+      "gameId": "stories-your-choice",
+      "themeId": "new-year",
+      "title": {
+        "ru": "Станция в канун Нового года",
+        "en": "New Year’s Eve station"
+      },
+      "file": "art/stories-newyear.png",
+      "alt": {
+        "ru": "Рельсы изгибаются у заснеженного перрона. Под фонарём ждут дорожные сундуки.",
+        "en": "The tracks curve past a snowy platform. Travel trunks sit beneath a lamp."
+      }
+    }
+  ],
+  "characters": [
+    {
+      "id": "survival-scout",
+      "gameId": "survivalist-invasion",
+      "title": {
+        "ru": "Разведчица с фонарём",
+        "en": "Scout with a lantern"
+      },
+      "file": "art/survival-scout.png"
+    },
+    {
+      "id": "stories-captain",
+      "gameId": "stories-your-choice",
+      "title": {
+        "ru": "Пиратская капитанка",
+        "en": "Pirate captain"
+      },
+      "file": "art/stories-captain.png"
+    },
+    {
+      "id": "stories-cowboy",
+      "gameId": "stories-your-choice",
+      "title": {
+        "ru": "Странствующий ковбой",
+        "en": "Traveling cowboy"
+      },
+      "file": "art/stories-cowboy.png"
+    }
+  ],
+  "campaignTypes": [
+    {
+      "id": "announcement",
+      "title": {
+        "ru": "Анонс",
+        "en": "Announcement"
+      },
+      "requiredBriefFields": [],
+      "postSuffix": {
+        "ru": "",
+        "en": ""
+      }
+    },
+    {
+      "id": "promotion",
+      "title": {
+        "ru": "Акция",
+        "en": "Promotion"
+      },
+      "requiredBriefFields": [
+        "offer",
+        "period"
+      ],
+      "postSuffix": {
+        "ru": "{offer}\nСрок акции — {period}.",
+        "en": "{offer}\nOffer dates — {period}."
+      }
+    },
+    {
+      "id": "giveaway",
+      "title": {
+        "ru": "Розыгрыш",
+        "en": "Giveaway"
+      },
+      "requiredBriefFields": [
+        "prize",
+        "entryRules",
+        "period"
+      ],
+      "postSuffix": {
+        "ru": "Приз — {prize}.\nКак участвовать — {entryRules}.\nСрок розыгрыша — {period}.",
+        "en": "Prize — {prize}.\nHow to enter — {entryRules}.\nGiveaway dates — {period}."
+      }
+    }
+  ],
+  "copy": [
+    {
+      "id": "survival-ha-light",
+      "gameId": "survivalist-invasion",
+      "themeId": "halloween",
+      "backgroundId": "survival-halloween",
+      "characterId": "survival-scout",
+      "headline": {
+        "ru": "Кто оставил свет на вышке?",
+        "en": "Who left the tower light on?"
+      },
+      "post": {
+        "ru": "До темноты хватит времени на одну вылазку. Пойдёшь к старой вышке за припасами или вернёшься укреплять базу?",
+        "en": "One supply run before dark. Do you head for the old watchtower or turn back to shore up your base?"
+      },
+      "cta": {
+        "ru": "Начать выживание",
+        "en": "Play Survivalist"
+      }
+    },
+    {
+      "id": "survival-ha-pack",
+      "gameId": "survivalist-invasion",
+      "themeId": "halloween",
+      "backgroundId": "survival-halloween",
+      "characterId": null,
+      "headline": {
+        "ru": "Что положишь в рюкзак?",
+        "en": "What’s in your pack?"
+      },
+      "post": {
+        "ru": "Фонарь пригодится после заката, бинты выручат в дороге, а для находок тоже нужно место. С чем выйдешь за ворота?",
+        "en": "A lantern for the way home, bandages for the unexpected, and room for whatever you find. What makes the cut?"
+      },
+      "cta": {
+        "ru": "Собрать рюкзак",
+        "en": "Pack your bag"
+      }
+    },
+    {
+      "id": "survival-ny-home",
+      "gameId": "survivalist-invasion",
+      "themeId": "new-year",
+      "backgroundId": "survival-newyear",
+      "characterId": null,
+      "headline": {
+        "ru": "Дом там, где горит свет",
+        "en": "A light to come home to"
+      },
+      "post": {
+        "ru": "За стеной метель. Внутри тепло, можно починить снаряжение и разобрать находки. Где ты построишь свою первую базу?",
+        "en": "The storm can wait. Inside, there’s time to mend your gear and sort through the day’s finds. Where will you build your first base?"
+      },
+      "cta": {
+        "ru": "Построить базу",
+        "en": "Build your base"
+      }
+    },
+    {
+      "id": "survival-ny-midnight",
+      "gameId": "survivalist-invasion",
+      "themeId": "new-year",
+      "backgroundId": "survival-newyear",
+      "characterId": "survival-scout",
+      "headline": {
+        "ru": "Домой до полуночи",
+        "en": "Home before midnight"
+      },
+      "post": {
+        "ru": "Впереди уже видно огни базы, а в стороне темнеет старый склад. Свернёшь за припасами или побережёшь то, что уже нашёл?",
+        "en": "Your camp lights are in sight. So is a warehouse you haven’t searched. Take one last detour or get your haul home safe?"
+      },
+      "cta": {
+        "ru": "Начать выживание",
+        "en": "Play Survivalist"
+      }
+    },
+    {
+      "id": "stories-ha-captain",
+      "gameId": "stories-your-choice",
+      "themeId": "halloween",
+      "backgroundId": "stories-halloween",
+      "characterId": "stories-captain",
+      "headline": {
+        "ru": "Доверишься капитану?",
+        "en": "Trust the captain?"
+      },
+      "post": {
+        "ru": "Порт в огнях маскарада. На ладони у капитана ключ, за спиной — корабль. Какой вопрос ты задашь, прежде чем ступить на борт?",
+        "en": "It’s masquerade night. The captain holds out a key. Her ship waits at the dock. What do you ask before stepping aboard?"
+      },
+      "cta": {
+        "ru": "Сделать выбор",
+        "en": "Make your choice"
+      }
+    },
+    {
+      "id": "stories-ha-mask",
+      "gameId": "stories-your-choice",
+      "themeId": "halloween",
+      "backgroundId": "stories-halloween",
+      "characterId": null,
+      "headline": {
+        "ru": "Под маской тебя не узнают",
+        "en": "Keep your mask on?"
+      },
+      "post": {
+        "ru": "Остаться под маской, назвать своё имя или исчезнуть до рассвета. Как начнётся твоя история в осеннем порту?",
+        "en": "Give a stranger your real name, stay behind the mask, or slip away before dawn. How does your night in the harbor begin?"
+      },
+      "cta": {
+        "ru": "Открыть историю",
+        "en": "Start your story"
+      }
+    },
+    {
+      "id": "stories-ny-ticket",
+      "gameId": "stories-your-choice",
+      "themeId": "new-year",
+      "backgroundId": "stories-newyear",
+      "characterId": "stories-cowboy",
+      "headline": {
+        "ru": "Билет в один конец?",
+        "en": "A one-way ticket?"
+      },
+      "post": {
+        "ru": "Канун Нового года. Поезд трогается, а твой попутчик вдруг остаётся на перроне. Сойдёшь следом или продолжишь путь?",
+        "en": "The train pulls out on New Year’s Eve, but your traveling companion is still on the platform. Do you step off or stay aboard?"
+      },
+      "cta": {
+        "ru": "Сделать выбор",
+        "en": "Make your choice"
+      }
+    },
+    {
+      "id": "stories-ny-midnight",
+      "gameId": "stories-your-choice",
+      "themeId": "new-year",
+      "backgroundId": "stories-newyear",
+      "characterId": null,
+      "headline": {
+        "ru": "С кем встретишь полночь?",
+        "en": "Who’s with you at midnight?"
+      },
+      "post": {
+        "ru": "За окном вагона идёт снег. У тебя есть время задать попутчику один вопрос. Спросишь, куда он едет, или от кого бежит?",
+        "en": "Snow drifts past the train window. You have time for one question. Will you ask your companion where they’re headed or who they’re running from?"
+      },
+      "cta": {
+        "ru": "Открыть историю",
+        "en": "Start your story"
+      }
+    }
+  ]
+}

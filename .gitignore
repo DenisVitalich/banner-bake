@@ -1,0 +1,13 @@
+.usage-local/
+__pycache__/
+.DS_Store
+node_modules/
+.next/
+.data/
+next-env.d.ts
+*.tsbuildinfo
+.playwright-cli/
+output/
+.env*
+!.env.example
+.npmrc

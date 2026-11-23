@@ -1,0 +1,15 @@
+node_modules
+.next
+.data
+.git
+.usage-local
+.playwright-cli
+.env*
+.npmrc
+evidence
+output
+**/.DS_Store
+.DS_Store
+starter/examples
+starter/preview*.jpg
+*.tsbuildinfo

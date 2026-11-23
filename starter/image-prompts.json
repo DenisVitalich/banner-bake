@@ -1,0 +1,58 @@
+[
+  {
+    "id": "survival-halloween",
+    "game": "survivalist-invasion",
+    "kind": "background",
+    "theme": "halloween",
+    "transparent": false,
+    "prompt": "Use case: ads-marketing. Produce ONE finished, genuinely original game-ad concept illustration for a fictional portfolio demonstration, not a screenshot, not an official game asset, no borrowed characters, logos, distinctive game designs, lettering, numerals, captions, graphic UI, border or watermark. Output a square 1:1 composition. It is a full-bleed background plate for a square ad. Reserve the left 42 percent as quiet low-detail dark tonal space where white Russian ad copy can be overlaid; the picture still feels continuous and rich. Put the strongest key subject around x=68%, in the middle-upper portion; keep foreground right usable for an optional small person overlay. No people, figures or silhouettes of people. An abandoned iron lookout above a tiny improvised refuge: a single amber lamp in the window, rain on old timber, sagging canvas, cable and a battered but cared-for water barrel, twin tiny carved gourds by the porch. Blue-black night and cold mist reflecting amber; damp ground, distant fir treeline. Grounded cinematic survival key art, tactile tonal realism, sophisticated cinematic colour, beautiful photographic edges, clear atmospheric depth. No fighting, blood, weapons or monsters."
+  },
+  {
+    "id": "survival-newyear",
+    "game": "survivalist-invasion",
+    "kind": "background",
+    "theme": "new-year",
+    "transparent": false,
+    "prompt": "Use case: ads-marketing. Produce ONE finished, genuinely original game-ad concept illustration for a fictional portfolio demonstration, not a screenshot, not an official game asset, no borrowed characters, logos, distinctive game designs, lettering, numerals, captions, graphic UI, border or watermark. Output a square 1:1 composition. It is a full-bleed background plate for a square ad. Reserve the left 42 percent as quiet low-detail dark tonal space where white Russian ad copy can be overlaid; the picture still feels continuous and rich. Put the strongest key subject around x=68%, in the middle-upper portion; keep foreground right usable for an optional small person overlay. No people, figures or silhouettes of people. The end of the year at a snowy improvised weather station in a mountain valley, practical patched tin building, a glowing orange doorway, a short string of warm bulbs and a fir branch on the lintel. Foreground banks of fresh snow, distant green-blue twilight, flurries backlit by a single lamp. Moody cinematic painted realism, sturdy architectural details, warm/cool contrast, panoramic depth inside a square. Distinct from an autumn camp illustration. No fighting, weapons or holiday typography."
+  },
+  {
+    "id": "stories-halloween",
+    "game": "stories-your-choice",
+    "kind": "background",
+    "theme": "halloween",
+    "transparent": false,
+    "prompt": "Use case: ads-marketing. Produce ONE finished, genuinely original game-ad concept illustration for a fictional portfolio demonstration, not a screenshot, not an official game asset, no borrowed characters, logos, distinctive game designs, lettering, numerals, captions, graphic UI, border or watermark. Output a square 1:1 composition. It is a full-bleed background plate for a square ad. Reserve the left 42 percent as quiet low-detail dark tonal space where white Russian ad copy can be overlaid; the picture still feels continuous and rich. Put the strongest key subject around x=68%, in the middle-upper portion; keep foreground right usable for an optional small person overlay. No people, figures or silhouettes of people. An imaginary 19th-century harbour at blue hour. On the right a covered dock, a warmly lit rope bridge and the elegant silhouette of a small two-masted sailing boat. Copper leaves and a single discreet carved lantern at a fork in the pier hint at an autumn masquerade. Luminous violet shadows and apricot light, subtle etched lines, painterly gouache on paper, romantic illustrated adventure-book cover with bold purposeful silhouettes. No scene from an existing game, no modern technology."
+  },
+  {
+    "id": "stories-newyear",
+    "game": "stories-your-choice",
+    "kind": "background",
+    "theme": "new-year",
+    "transparent": false,
+    "prompt": "Use case: ads-marketing. Produce ONE finished, genuinely original game-ad concept illustration for a fictional portfolio demonstration, not a screenshot, not an official game asset, no borrowed characters, logos, distinctive game designs, lettering, numerals, captions, graphic UI, border or watermark. Output a square 1:1 composition. It is a full-bleed background plate for a square ad. Reserve the left 42 percent as quiet low-detail dark tonal space where white Russian ad copy can be overlaid; the picture still feels continuous and rich. Put the strongest key subject around x=68%, in the middle-upper portion; keep foreground right usable for an optional small person overlay. No people, figures or silhouettes of people. A snowy lantern-lit railway stop in an imaginary 19th-century coastal trading town, piled travellers' trunks and a distant ship mast connecting roads and sea, a shop window decorated with a fir garland and a red ribbon. A thin sunrise illuminates snow on the roof, midnight indigo and warm coral, sweeping hand-painted gouache shapes with fine etching, sophisticated illustrated storybook key art. Contemplative, inviting fork-in-the-road mood. No modern technology."
+  },
+  {
+    "id": "survival-scout",
+    "game": "survivalist-invasion",
+    "kind": "character",
+    "theme": null,
+    "transparent": true,
+    "prompt": "Use case: ads-marketing. Produce ONE finished, genuinely original game-ad concept illustration for a fictional portfolio demonstration, not a screenshot, not an official game asset, no borrowed characters, logos, distinctive game designs, lettering, numerals, captions, graphic UI, border or watermark. Output a square 1:1 composition. A single isolated original adult character as a true transparent PNG cutout. Full three-quarter figure from head to upper thighs, hands, outer costume and props comfortably inside frame; upright, strong readable silhouette, looking left towards type, placed centrally in a square canvas with generous margin. True transparent background all around and between elements, no scene, no checkerboard drawing, no floor or cast shadow. Soft key light from upper left with a little warm rim, suitable for a large variety of backgrounds. A resourceful female field scout in her early 40s, dark skin and closely cropped curls, a faded blue olive waxed canvas parka with one small orange repair patch and an old canvas satchel, holding a small unmarked brass camping lantern at hip height in one hand. Observant, composed expression. Painterly cinematic realism and palpable weathered textures matching an original survival story. No weapon, tactical gesture, existing character or official insignia."
+  },
+  {
+    "id": "stories-captain",
+    "game": "stories-your-choice",
+    "kind": "character",
+    "theme": null,
+    "transparent": true,
+    "prompt": "Use case: ads-marketing. Produce ONE finished, genuinely original game-ad concept illustration for a fictional portfolio demonstration, not a screenshot, not an official game asset, no borrowed characters, logos, distinctive game designs, lettering, numerals, captions, graphic UI, border or watermark. Output a square 1:1 composition. A single isolated original adult character as a true transparent PNG cutout. Full three-quarter figure from head to upper thighs, hands, outer costume and props comfortably inside frame; upright, strong readable silhouette, looking left towards type, placed centrally in a square canvas with generous margin. True transparent background all around and between elements, no scene, no checkerboard drawing, no floor or cast shadow. Soft key light from upper left with a little warm rim, suitable for a large variety of backgrounds. A charismatic original adult woman who is a merchant pirate captain, dark wavy hair tucked in a teal bandanna, deep plum naval jacket with asymmetric bronze clasps and a scarf, an unlettered folded chart in one hand. Relaxed confidence, lively three-quarter face. Premium illustrated adventure-book portrait, hand-painted gouache with fine warm ink contours, a mature and appealing non-caricatured design. No weapon, celebrity likeness or franchise motifs."
+  },
+  {
+    "id": "stories-cowboy",
+    "game": "stories-your-choice",
+    "kind": "character",
+    "theme": null,
+    "transparent": true,
+    "prompt": "Use case: ads-marketing. Produce ONE finished, genuinely original game-ad concept illustration for a fictional portfolio demonstration, not a screenshot, not an official game asset, no borrowed characters, logos, distinctive game designs, lettering, numerals, captions, graphic UI, border or watermark. Output a square 1:1 composition. A single isolated original adult character as a true transparent PNG cutout. Full three-quarter figure from head to upper thighs, hands, outer costume and props comfortably inside frame; upright, strong readable silhouette, looking left towards type, placed centrally in a square canvas with generous margin. True transparent background all around and between elements, no scene, no checkerboard drawing, no floor or cast shadow. Soft key light from upper left with a little warm rim, suitable for a large variety of backgrounds. An original adult travelling cowboy with warm brown skin, sturdy wide-brim ochre hat, turquoise neckerchief, dusty russet short rider's jacket and work gloves, resting a hand on his canvas saddlebag. Quietly witty, friendly expression. Premium gouache and fine warm ink contours of an illustrated adventure-book portrait. No weapons, holsters, existing character, insignia or lettering."
+  }
+]

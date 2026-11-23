@@ -1,0 +1,230 @@
+{
+  "navigation": {
+    "ads": {
+      "ru": "Объявления",
+      "en": "Ads"
+    },
+    "create": {
+      "ru": "Создать вариант",
+      "en": "Create variant"
+    },
+    "interfaceLanguage": {
+      "ru": "Язык интерфейса",
+      "en": "Interface language"
+    }
+  },
+  "brief": {
+    "creativeLanguage": {
+      "ru": "Язык объявления",
+      "en": "Ad language"
+    },
+    "game": {
+      "ru": "Игра",
+      "en": "Game"
+    },
+    "theme": {
+      "ru": "Тематика",
+      "en": "Theme"
+    },
+    "scene": {
+      "ru": "Сцена",
+      "en": "Scene"
+    },
+    "character": {
+      "ru": "Персонаж",
+      "en": "Character"
+    },
+    "noCharacter": {
+      "ru": "Без персонажа",
+      "en": "No character"
+    },
+    "type": {
+      "ru": "Тип публикации",
+      "en": "Campaign type"
+    },
+    "flight": {
+      "ru": "Даты показа",
+      "en": "Ad run dates"
+    },
+    "offer": {
+      "ru": "Предложение",
+      "en": "Offer"
+    },
+    "prize": {
+      "ru": "Приз",
+      "en": "Prize"
+    },
+    "entryRules": {
+      "ru": "Условия участия",
+      "en": "How to enter"
+    },
+    "period": {
+      "ru": "Срок предложения",
+      "en": "Offer dates"
+    },
+    "giveawayPeriod": {
+      "ru": "Срок розыгрыша",
+      "en": "Giveaway dates"
+    }
+  },
+  "editor": {
+    "mode": {
+      "ru": "Что собрать",
+      "en": "What to create"
+    },
+    "textOnly": {
+      "ru": "Только текст",
+      "en": "Text only"
+    },
+    "imageOnly": {
+      "ru": "Только изображение",
+      "en": "Image only"
+    },
+    "both": {
+      "ru": "Текст и изображение",
+      "en": "Text and image"
+    },
+    "generate": {
+      "ru": "Сгенерировать",
+      "en": "Generate"
+    },
+    "generating": {
+      "ru": "Генерируем…",
+      "en": "Generating…"
+    },
+    "variantsReady": {
+      "ru": "Варианты готовы.",
+      "en": "Variants are ready."
+    },
+    "fromScratch": {
+      "ru": "Начать с нуля",
+      "en": "Start from scratch"
+    },
+    "upload": {
+      "ru": "Загрузить изображение",
+      "en": "Upload image"
+    },
+    "chooseImage": {
+      "ru": "Выбрать изображение",
+      "en": "Choose image"
+    },
+    "reuseText": {
+      "ru": "Использовать этот текст",
+      "en": "Use this text"
+    },
+    "headline": {
+      "ru": "Заголовок баннера",
+      "en": "Banner headline"
+    },
+    "post": {
+      "ru": "Текст публикации",
+      "en": "Post copy"
+    },
+    "cta": {
+      "ru": "Текст кнопки",
+      "en": "Button text"
+    },
+    "preview": {
+      "ru": "Предпросмотр",
+      "en": "Preview"
+    },
+    "save": {
+      "ru": "Сохранить черновик",
+      "en": "Save draft"
+    },
+    "copyPost": {
+      "ru": "Скопировать текст",
+      "en": "Copy post"
+    },
+    "removeCharacter": {
+      "ru": "Убрать персонажа",
+      "en": "Remove character"
+    }
+  },
+  "analytics": {
+    "allGames": {
+      "ru": "Все игры",
+      "en": "All games"
+    },
+    "demo": {
+      "ru": "Демоданные",
+      "en": "Demo data"
+    },
+    "asOf": {
+      "ru": "Данные на {date}",
+      "en": "Data as of {date}"
+    },
+    "impressions": {
+      "ru": "Показы",
+      "en": "Impressions"
+    },
+    "clicks": {
+      "ru": "Клики",
+      "en": "Clicks"
+    },
+    "installs": {
+      "ru": "Установки",
+      "en": "Installs"
+    },
+    "ctr": {
+      "ru": "Кликабельность (CTR)",
+      "en": "Click-through rate (CTR)"
+    },
+    "tooEarly": {
+      "ru": "Мало данных",
+      "en": "Too little data"
+    }
+  },
+  "feedback": {
+    "required": {
+      "ru": "Заполни это поле.",
+      "en": "Fill in this field."
+    },
+    "badDates": {
+      "ru": "Дата окончания должна совпадать с датой начала или быть позже.",
+      "en": "Choose an end date on or after the start date."
+    },
+    "uploadFailed": {
+      "ru": "Не удалось загрузить изображение. Попробуй ещё раз.",
+      "en": "The image couldn’t be uploaded. Try again."
+    },
+    "saveFailed": {
+      "ru": "Не удалось сохранить изменения. Попробуй ещё раз.",
+      "en": "Your changes couldn’t be saved. Try again."
+    },
+    "saved": {
+      "ru": "Черновик сохранён",
+      "en": "Draft saved"
+    },
+    "emptyAds": {
+      "ru": "По этим фильтрам объявлений пока нет.",
+      "en": "No ads match these filters yet."
+    },
+    "noVariants": {
+      "ru": "Для этих условий пока нет вариантов.",
+      "en": "No variants match this brief yet."
+    },
+    "loading": {
+      "ru": "Загрузка…",
+      "en": "Loading…"
+    }
+  },
+  "publication": {
+    "launch": {
+      "ru": "Запустить в демо",
+      "en": "Launch in demo"
+    },
+    "draft": {
+      "ru": "Черновик",
+      "en": "Draft"
+    },
+    "live": {
+      "ru": "Запущено",
+      "en": "Live"
+    },
+    "replaced": {
+      "ru": "Заменено",
+      "en": "Replaced"
+    }
+  }
+}

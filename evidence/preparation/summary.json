@@ -1,0 +1,16 @@
+{
+  "scope": "preparation",
+  "source": "token_usage_record",
+  "through_utc": "2026-11-21T09:32:12.458Z",
+  "records": 99,
+  "usage": {
+    "input_tokens": 10800067,
+    "cached_input_tokens": 10323200,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 143070,
+    "reasoning_output_tokens": 80860,
+    "total_tokens": 10943137
+  },
+  "turns": 15,
+  "response_sum_matches_thread_total": true
+}

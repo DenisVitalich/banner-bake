@@ -1,0 +1,160 @@
+import { z } from "zod";
+import source from "../starter/ui.json";
+import type { Locale } from "./catalog";
+
+const dictionary = {
+  ...source.navigation, ...source.brief, ...source.editor, ...source.publication,
+  ...source.analytics, ...source.feedback,
+  settings: { ru: "Настройки", en: "Settings" },
+  settingsIntro: { ru: "Управляйте играми и вариантами в полях редактора.", en: "Manage games and options in the creative editor." },
+  choiceAdd: { ru: "Добавить вариант", en: "Add an option" },
+  choiceKind: { ru: "Поле", en: "Field" },
+  choiceName: { ru: "Название", en: "Name" },
+  choiceBehavior: { ru: "Правила публикации", en: "Publication behavior" },
+  "choice-game": { ru: "Игры", en: "Games" },
+  "choice-theme": { ru: "Темы", en: "Themes" },
+  "choice-background": { ru: "Сцены", en: "Scenes" },
+  "choice-character": { ru: "Персонажи", en: "Characters" },
+  "choice-publication": { ru: "Типы публикаций", en: "Publication types" },
+  choiceRemoveHint: { ru: "Удаление скрывает варианты в новых креативах. Сохранённые объявления сохраняют свои настройки.", en: "Removing options hides them in new creatives. Existing ads keep their settings." },
+  removeChoice: { ru: "Удалить {title}", en: "Remove {title}" },
+  choiceAdded: { ru: "Вариант добавлен.", en: "Option added." },
+  choiceRemoved: { ru: "Вариант удалён.", en: "Option removed." },
+  choiceFailed: { ru: "Не удалось изменить настройки. Проверьте поля и попробуйте ещё раз.", en: "Could not update settings. Check the fields and try again." },
+  noChoices: { ru: "Тут пока нет вариантов.", en: "No options yet." },
+  add: { ru: "Добавить", en: "Add" },
+  characterAssetHint: { ru: "Для персонажа подходит PNG с прозрачным фоном.", en: "Use a transparent PNG for the character." },
+  emptyImage: { ru: "Выберите сцену, загрузите изображение или сгенерируйте вариант.", en: "Choose a scene, upload an image, or generate a variant." },
+  noScene: { ru: "Без сцены", en: "No scene" },
+  noImageSelected: { ru: "Изображение не выбрано", en: "No image selected" },
+  noCatalogArt: { ru: "Добавьте сцену для этой игры и темы или загрузите изображение.", en: "Add a scene for this game and theme, or upload an image." },
+  backgroundRequired: { ru: "Выберите сцену или добавьте изображение.", en: "Choose a scene or add an image." },
+  "sampleTitle-discover": { ru: "Откройте мир {game}", en: "Discover {game}" },
+  "sampleTitle-return": { ru: "Возвращайтесь в {game}", en: "Return to {game}" },
+  "samplePost-discover": { ru: "Загляните в {game} и начните своё приключение.", en: "Step into {game} and start your adventure." },
+  "samplePost-return": { ru: "Зовите друзей и продолжайте приключение в {game}.", en: "Invite your friends and continue the adventure in {game}." },
+  samplePlay: { ru: "Играть", en: "Play now" },
+  downloaded: { ru: "Файл готов к скачиванию.", en: "Download ready." },
+  platformPreview: { ru: "Предпросмотр на площадке", en: "Placement preview" },
+  "placementContext-landing": { ru: "Лендинг игры", en: "Game landing page" },
+  "placementContext-game": { ru: "Игровое событие", en: "In-game event" },
+  "placementContext-steam": { ru: "Новости игры в Steam", en: "Steam game news" },
+  "placementContext-instagram": { ru: "Пост в Instagram", en: "Instagram post" },
+  analytics: { ru: "Аналитика", en: "Analytics" },
+  analyticsIntro: { ru: "Показы, клики и установки по играм за выбранный период.", en: "Impressions, clicks and installs by game for the selected period." },
+  analyticsFilters: { ru: "Фильтры аналитики", en: "Analytics filters" },
+  quickPeriods: { ru: "Быстрый выбор периода", en: "Quick date ranges" },
+  periodDays: { ru: "{days} дн.", en: "{days} days" },
+  invalidPeriod: { ru: "Укажите корректные даты периода.", en: "Choose a valid date range." },
+  noAnalyticsData: { ru: "За выбранный период данных пока нет.", en: "There is no data for the selected period." },
+  vsPrevious: { ru: "к пред. периоду", en: "vs. previous period" },
+  trend: { ru: "Динамика по дням", en: "Daily trend" },
+  byGame: { ru: "По играм", en: "By game" },
+  chartDay: { ru: "День на графике", en: "Day on chart" },
+  darkTheme: { ru: "Тёмная тема", en: "Dark mode" },
+  platforms: { ru: "Площадки размещения", en: "Placement platforms" },
+  "platform-landing": { ru: "Лендинг", en: "Landing page" },
+  "platform-game": { ru: "Игра", en: "In-game" },
+  "platform-steam": { ru: "Steam", en: "Steam" },
+  "platform-instagram": { ru: "Instagram", en: "Instagram" },
+  platformRequired: { ru: "Выберите хотя бы одну площадку.", en: "Choose at least one platform." },
+  publish: { ru: "Публикация", en: "Publication" },
+  confirmLaunch: { ru: "Подтвердить запуск", en: "Confirm launch" },
+  launchHelp: { ru: "Проверьте баннер, текст и площадки перед запуском.", en: "Check the banner, copy and platforms before launching." },
+  launchDetailsMissing: { ru: "Откройте редактор и заполните обязательные поля.", en: "Open the editor and fill in the required fields." },
+  launchFailed: { ru: "Не удалось запустить объявление. Попробуйте ещё раз.", en: "Couldn’t launch the ad. Try again." },
+  exportFormat: { ru: "Формат файла", en: "File format" },
+  "format-png": { ru: "PNG · баннер", en: "PNG · banner" },
+  "format-html": { ru: "HTML · весь пост", en: "HTML · full post" },
+  "format-txt": { ru: "TXT · текст поста", en: "TXT · post text" },
+  downloadPost: { ru: "Скачать", en: "Download" },
+  installRate: { ru: "Из кликов в установки: {actual}.", en: "Click-to-install rate: {actual}." },
+  workspace: { ru: "Рекламная мастерская", en: "Creative workspace" },
+  dashboardIntro: { ru: "Следите за показами и установками и готовьте новые креативы.", en: "Track impressions and installs, and prepare your next creatives." },
+  list: { ru: "Все креативы", en: "All creatives" },
+  creative: { ru: "Креатив", en: "Creative" },
+  status: { ru: "Статус", en: "Status" },
+  performance: { ru: "Оценка", en: "Performance" },
+  action: { ru: "Действие", en: "Action" },
+  noVolume: { ru: "За день нужно не меньше {impressions} показов и {installs} установок.", en: "Each day needs at least {impressions} impressions and {installs} installs." },
+  recent: { ru: "Доступно меньше двух закрытых дней с данными.", en: "Fewer than two closed days have data." },
+  collecting: { ru: "Статистика появится после запуска.", en: "Performance data will appear after launch." },
+  open: { ru: "Открыть", en: "Open" },
+  back: { ru: "К объявлениям", en: "Back to ads" },
+  brief: { ru: "Бриф", en: "Brief" },
+  briefIntro: { ru: "Игра, тематика и условия публикации", en: "Game, theme, and publication terms" },
+  designIntro: { ru: "Сгенерируйте варианты из демокаталога и выберите основу.", en: "Generate options from the demo catalog and choose a starting point." },
+  edit: { ru: "Редактировать вариант", en: "Edit variant" },
+  editCreative: { ru: "Редактировать", en: "Edit creative" },
+  closePreview: { ru: "Закрыть предпросмотр", en: "Close preview" },
+  paused: { ru: "На паузе", en: "Paused" },
+  stopped: { ru: "Остановлено", en: "Stopped" },
+  deleted: { ru: "Удалено", en: "Deleted" },
+  pause: { ru: "Поставить на паузу", en: "Pause" },
+  resume: { ru: "Возобновить показ", en: "Resume" },
+  stop: { ru: "Остановить показ", en: "Stop delivery" },
+  delete: { ru: "Удалить", en: "Delete" },
+  confirmDelete: { ru: "Удалить объявление?", en: "Delete this ad?" },
+  deleteHelp: { ru: "Объявление исчезнет из списка. Если оно запущено, показ прекратится.", en: "The ad will disappear from the list. Any active delivery will end." },
+  deleteCreative: { ru: "Удалить объявление", en: "Delete ad" },
+  creativeDeleted: { ru: "Объявление удалено", en: "Ad deleted" },
+  cancel: { ru: "Отмена", en: "Cancel" },
+  statusFailed: { ru: "Не удалось изменить статус. Попробуйте ещё раз.", en: "Couldn’t change the status. Try again." },
+  version: { ru: "Версия {number}", en: "Version {number}" },
+  inherited: { ru: "Изменения сохранятся в новой версии.", en: "Your edits will be saved as a new version." },
+  editActive: { ru: "Активная версия продолжит показ до запуска замены.", en: "The active version will keep running until its replacement launches." },
+  launched: { ru: "Объявление успешно запущено.", en: "The ad is live in the demo." },
+  previewEmpty: { ru: "Заголовок баннера", en: "Banner headline" },
+  buttonEmpty: { ru: "Текст кнопки", en: "Button text" },
+  previewIntro: { ru: "Баннер · 1080 × 1080", en: "Banner · 1080 × 1080" },
+  postPreview: { ru: "Готовый текст", en: "Final post" },
+  postMain: { ru: "Основной текст публикации", en: "Main post copy" },
+  postHelp: { ru: "Напишите обращение к игроку. Предложение, условия розыгрыша и сроки подтянутся из брифа в готовый текст.", en: "Write the message for players. The final post adds the offer, giveaway terms, and dates from the brief." },
+  offerHint: { ru: "Укажите конкретную выгоду, например «Скидка 20 % на первый набор». Срок задайте отдельно.", en: "Enter the actual deal, such as “20% off the first pack.” Set its dates separately." },
+  optionalOfferHint: { ru: "Добавьте выгоду, если она есть, например «Бесплатный стартовый набор». Для анонса поле необязательно.", en: "Add a deal if there is one, such as “Free starter pack.” This field is optional for announcements." },
+  postEmpty: { ru: "Введите текст, чтобы увидеть публикацию.", en: "Enter copy to preview the post." },
+  copied: { ru: "Текст скопирован", en: "Post copied" },
+  copyError: { ru: "Не удалось скопировать текст.", en: "Couldn’t copy the post." },
+  from: { ru: "Начало", en: "Start date" },
+  until: { ru: "Окончание", en: "End date" },
+  reuse: { ru: "Взять текст из объявления", en: "Reuse copy from an ad" },
+  choose: { ru: "Выберите вариант", en: "Choose a variant" },
+  catalogImage: { ru: "Сцена из каталога", en: "Catalog scene" },
+  customImage: { ru: "Своё изображение", en: "Custom image" },
+  browseImage: { ru: "Выбрать файл", en: "Choose file" },
+  useVariant: { ru: "Применить", en: "Apply" },
+  image: { ru: "Изображение", en: "Image" },
+  invalid: { ru: "Проверьте значение поля.", en: "Check the value in this field." },
+  uploadHint: { ru: "PNG, JPEG или WebP, до 8 МБ", en: "PNG, JPEG, or WebP, up to 8 MB" },
+  conflict: { ru: "Версия уже обновилась. Откройте её снова.", en: "This version changed. Reopen it to get the latest copy." },
+  notAllowed: { ru: "Это действие недоступно для текущего статуса.", en: "This action is unavailable for the current status." },
+  missing: { ru: "Объявление недоступно.", en: "This ad is unavailable." },
+  exportFailed: { ru: "Не удалось скачать файл. Проверьте поля креатива.", en: "Couldn’t download the file. Check the creative fields." },
+  noTitle: { ru: "Без заголовка", en: "Untitled" },
+  replacement: { ru: "Замена", en: "Replacement" },
+} satisfies Record<string, { ru: string; en: string }>;
+
+export type Message = keyof typeof dictionary;
+const messages = z.record(z.string(), z.object({ ru: z.string(), en: z.string() })).parse(dictionary);
+
+export function t(locale: Locale, key: Message, values: Record<string, string> = {}): string {
+  return messages[key][locale].replace(/\{(\w+)\}/g, (match, name: string) => values[name] ?? match);
+}
+
+export function number(locale: Locale, value: number): string {
+  return new Intl.NumberFormat(locale).format(value);
+}
+
+export function percent(locale: Locale, fraction: number | null): string {
+  return fraction === null ? "—" : new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 1 }).format(fraction);
+}
+
+export function preferredLocale(cookie: string | undefined, header: string): Locale {
+  if (cookie === "ru" || cookie === "en") return cookie;
+  const preferences = header.split(",").map(value => {
+    const [tag, weight] = value.trim().split(";");
+    return { locale: tag.toLowerCase().split("-")[0], q: weight ? Number(weight.trim().replace(/^q=/, "")) : 1 };
+  }).sort((a, b) => b.q - a.q);
+  const supported = preferences.find(item => item.q > 0 && (item.locale === "ru" || item.locale === "en"));
+  return supported?.locale === "en" ? "en" : "ru";
+}
