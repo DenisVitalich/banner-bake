@@ -60,7 +60,7 @@
       "characterId": "survival-scout",
       "status": "live",
       "campaignId": "survival-october",
-      "creativeLocale": "ru"
+      "creativeLocale": "en"
     },
     {
       "id": "demo-tower-d",
@@ -72,7 +72,7 @@
       "characterId": null,
       "status": "live",
       "campaignId": "survival-october",
-      "creativeLocale": "ru",
+      "creativeLocale": "en",
       "platforms": ["instagram"]
     },
     {
@@ -85,7 +85,7 @@
       "characterId": null,
       "status": "live",
       "campaignId": "survival-october",
-      "creativeLocale": "ru"
+      "creativeLocale": "en"
     },
     {
       "id": "demo-harbour-c",

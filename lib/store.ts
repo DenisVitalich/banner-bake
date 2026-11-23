@@ -50,6 +50,9 @@ function database(): DatabaseSync {
       workspace TEXT PRIMARY KEY, choices TEXT NOT NULL
     );
   `);
+  if (db.prepare("PRAGMA user_version").get()?.user_version === 0) {
+    transaction(migrateDemoCopy, db);
+  }
   connection = db;
   return db;
 }
@@ -94,8 +97,7 @@ export function readChoiceArt(workspace: string, id: string): Uint8Array | undef
     ? readUpload(workspace, choice.uploadId) : undefined;
 }
 
-function transaction<T>(run: (db: DatabaseSync) => T): T {
-  const db = database();
+function transaction<T>(run: (db: DatabaseSync) => T, db = database()): T {
   db.exec("BEGIN IMMEDIATE");
   try {
     const result = run(db);
@@ -105,6 +107,30 @@ function transaction<T>(run: (db: DatabaseSync) => T): T {
     db.exec("ROLLBACK");
     throw error;
   }
+}
+
+function migrateDemoCopy(db: DatabaseSync): void {
+  if (db.prepare("PRAGMA user_version").get()?.user_version !== 0) return;
+  const update = db.prepare(`
+    UPDATE versions
+    SET creative = json_set(creative, '$.locale', 'en', '$.headline', ?, '$.post', ?, '$.cta', ?),
+        revision = revision + 1
+    WHERE id = ? AND rootId = id AND parentId IS NULL AND version = 1 AND status <> 'deleted'
+      AND json_extract(creative, '$.locale') = 'ru'
+      AND json_extract(creative, '$.headline') = ?
+      AND json_extract(creative, '$.post') = ?
+      AND json_extract(creative, '$.cta') = ?
+      AND json_extract(creative, '$.offer') = ''
+      AND json_extract(creative, '$.prize') = ''
+      AND json_extract(creative, '$.entryRules') = ''
+  `);
+  for (const ad of demo.ads) {
+    if (ad.creativeLocale !== "en") continue;
+    const copy = catalog.copy.find(item => item.id === ad.copyId);
+    if (!copy) throw new Error("Invalid fixture copy reference");
+    update.run(copy.headline.en, copy.post.en, copy.cta.en, ad.id, copy.headline.ru, copy.post.ru, copy.cta.ru);
+  }
+  db.exec("PRAGMA user_version = 1");
 }
 
 function insert(db: DatabaseSync, workspace: string, row: Row): void {
