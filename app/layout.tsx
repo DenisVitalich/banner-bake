@@ -13,6 +13,6 @@ export const metadata: Metadata = {
 export default async function Layout({ children }: { children: ReactNode }): Promise<React.JSX.Element> {
   const prefs = await cookies();
   const locale = preferredLocale(prefs.get("creative-locale")?.value, (await headers()).get("accept-language") ?? "");
-  const theme = prefs.get("creative-theme")?.value === "dark" ? "dark" : "light";
+  const theme = prefs.get("creative-theme")?.value === "light" ? "light" : "dark";
   return <html lang={locale} data-theme={theme}><body>{children}</body></html>;
 }

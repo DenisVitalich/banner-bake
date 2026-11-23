@@ -17,6 +17,6 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ e
   const versions = listVersions(token.data);
   const { edit, view } = await searchParams;
   const screen = typeof edit === "string" && (edit === "new" || versions.some(version => version.id === edit)) ? edit : null;
-  return <Workspace locale={locale} editor={view === "analytics" || view === "settings" ? view : screen} dark={prefs.get("creative-theme")?.value === "dark"} today={localDate()}
+  return <Workspace locale={locale} editor={view === "analytics" || view === "settings" ? view : screen} dark={prefs.get("creative-theme")?.value !== "light"} today={localDate()}
     versions={versions} choices={listChoices(token.data)} uploads={listUploads(token.data)} />;
 }
