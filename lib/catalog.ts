@@ -9,6 +9,7 @@ const id = z.string().min(1).max(80);
 const art = z.string().regex(/^art\/[a-z-]+\.png$/);
 export const dateSchema = z.iso.date();
 export const campaignType = z.enum(["announcement", "promotion", "giveaway"]);
+export const platformSchema = z.enum(["landing", "game", "steam", "instagram"]);
 const layer = z.object({ id, gameId: id, title: translated, file: art });
 
 export const catalog = z.object({
@@ -37,7 +38,7 @@ export const demo = z.object({
   })),
   ads: z.array(z.object({
     id, label: translated, copyId: id, characterId: id.nullable(), status: z.literal("live"),
-    campaignId: id, creativeLocale: localeSchema,
+    campaignId: id, creativeLocale: localeSchema, platforms: z.array(platformSchema).default([]),
   })),
   periods: z.array(z.object({
     date: dateSchema, closed: z.boolean(), adId: id,

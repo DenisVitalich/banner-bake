@@ -1,16 +1,16 @@
 {
   "scope": "development",
   "source": "token_usage_record",
-  "through_utc": "2026-11-23T00:57:38.214Z",
-  "records": 179,
+  "through_utc": "2026-11-23T02:15:43.930Z",
+  "records": 290,
   "usage": {
-    "input_tokens": 40239359,
-    "cached_input_tokens": 39362816,
+    "input_tokens": 60182723,
+    "cached_input_tokens": 59057920,
     "cache_write_input_tokens": 0,
-    "output_tokens": 155665,
-    "reasoning_output_tokens": 55272,
-    "total_tokens": 40395024
+    "output_tokens": 234834,
+    "reasoning_output_tokens": 86685,
+    "total_tokens": 60417557
   },
-  "turns": 9,
+  "turns": 17,
   "response_sum_matches_thread_total": true
 }

@@ -4,8 +4,10 @@ import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import { catalog, demo } from "./catalog";
+import { performance } from "./analytics";
 import { availableChoices, choicesSchema, defaultChoices, type Choice, type ChoiceChange, type Choices } from "./choices";
 import { creativeSchema, deliveryActions, emptyCreative, statusSchema, validateCreative, type Creative, type DeliveryAction, type Status, type Upload, type Version, type VersionRef } from "./model";
+import { regenerateCreative } from "./regeneration";
 
 const rowSchema = z.object({
   id: z.string(), parentId: z.string().nullable(), rootId: z.string(),
@@ -19,6 +21,7 @@ const bytes = z.instanceof(Uint8Array);
 const deliveryStatus = {
   pause: "paused", resume: "live", stop: "stopped", delete: "deleted",
 } satisfies Record<DeliveryAction, Status>;
+const demoOrder = new Map(demo.ads.map((ad, index) => [ad.id, index]));
 let connection: DatabaseSync | undefined;
 
 function database(): DatabaseSync {
@@ -110,9 +113,10 @@ function insert(db: DatabaseSync, workspace: string, row: Row): void {
       row.reason, row.campaignId, row.autoWindow, row.updatedAt);
 }
 
-function seed(db: DatabaseSync, workspace: string): void {
-  if (db.prepare("SELECT 1 FROM versions WHERE workspace = ? LIMIT 1").get(workspace)) return;
+function seed(db: DatabaseSync, workspace: string, revisions?: ReadonlyMap<string, number>): void {
+  const ids = new Set(db.prepare("SELECT id FROM versions WHERE workspace = ?").all(workspace).map(row => row.id));
   for (const ad of demo.ads) {
+    if (ids.has(ad.id)) continue;
     const copy = catalog.copy.find(item => item.id === ad.copyId);
     const campaign = demo.campaigns.find(item => item.id === ad.campaignId);
     if (!copy || !campaign) throw new Error("Invalid fixture references");
@@ -121,10 +125,10 @@ function seed(db: DatabaseSync, workspace: string): void {
       ...emptyCreative(locale), gameId: copy.gameId, themeId: copy.themeId,
       backgroundId: copy.backgroundId, characterId: ad.characterId,
       headline: copy.headline[locale], post: copy.post[locale], cta: copy.cta[locale],
-      flightStart: campaign.flightStart, flightEnd: campaign.flightEnd,
+      flightStart: campaign.flightStart, flightEnd: campaign.flightEnd, platforms: ad.platforms,
     };
     insert(db, workspace, {
-      id: ad.id, parentId: null, rootId: ad.id, version: 1, revision: 1, status: ad.status,
+      id: ad.id, parentId: null, rootId: ad.id, version: 1, revision: revisions?.get(ad.id) ?? 1, status: ad.status,
       creative: JSON.stringify(creative), reason: "", campaignId: ad.campaignId, autoWindow: null, updatedAt: demo.asOf,
     });
   }
@@ -135,23 +139,40 @@ function decode(row: Row): Version {
   const creative = creativeSchema.parse(stored);
   if (typeof stored === "object" && stored && !("publicationId" in stored)) creative.publicationId = creative.type;
   return {
-    id: row.id, parentId: row.parentId, version: row.version, revision: row.revision,
+    id: row.id, rootId: row.rootId, parentId: row.parentId, version: row.version, revision: row.revision,
     status: row.status, creative,
     campaignId: row.campaignId, autoWindow: row.autoWindow, updatedAt: row.updatedAt,
   };
 }
 
 function rows(db: DatabaseSync, workspace: string): Row[] {
-  return z.array(rowSchema).parse(db.prepare("SELECT * FROM versions WHERE workspace = ? ORDER BY rowid").all(workspace));
+  return z.array(rowSchema).parse(db.prepare("SELECT * FROM versions WHERE workspace = ? ORDER BY rowid DESC").all(workspace));
+}
+
+function visibleVersions(versions: Row[]): Version[] {
+  return versions.filter(row => row.status !== "deleted")
+    .sort((a, b) => (demoOrder.get(a.id) ?? -1) - (demoOrder.get(b.id) ?? -1))
+    .map(decode);
 }
 
 export function listVersions(workspace: string): Version[] {
   const db = database();
   const existing = rows(db, workspace);
-  if (existing.length) return existing.filter(row => row.status !== "deleted").map(decode);
-  return transaction(tx => {
+  const ids = new Set(existing.map(row => row.id));
+  const versions = demo.ads.every(ad => ids.has(ad.id)) ? existing : transaction(tx => {
     seed(tx, workspace);
-    return rows(tx, workspace).filter(row => row.status !== "deleted").map(decode);
+    return rows(tx, workspace);
+  });
+  return visibleVersions(versions);
+}
+
+export function resetDemoVersions(workspace: string): Version[] {
+  return transaction(db => {
+    // Demo ads reuse their IDs. Advance the revisions so older tabs cannot act on restored rows.
+    const revisions = new Map(rows(db, workspace).map(row => [row.id, row.revision + 1]));
+    db.prepare("DELETE FROM versions WHERE workspace = ?").run(workspace);
+    seed(db, workspace, revisions);
+    return visibleVersions(rows(db, workspace));
   });
 }
 
@@ -169,7 +190,7 @@ function find(db: DatabaseSync, workspace: string, id: string, revision: number)
   return result;
 }
 
-function newDraft(db: DatabaseSync, workspace: string, creative: Creative, parent: Row | null): Row {
+function newDraft(db: DatabaseSync, workspace: string, creative: Creative, parent: Row | null, autoWindow: string | null = null): Row {
   const id = randomUUID();
   const rootId = parent?.rootId ?? id;
   const version = Number(db.prepare("SELECT COALESCE(MAX(version), 0) AS number FROM versions WHERE workspace = ? AND rootId = ?")
@@ -177,7 +198,7 @@ function newDraft(db: DatabaseSync, workspace: string, creative: Creative, paren
   const campaign = demo.campaigns.find(item => item.id === parent?.campaignId && item.gameId === creative.gameId);
   const row: Row = {
     id, rootId, parentId: parent?.id ?? null, status: "draft", creative: JSON.stringify(creative),
-    version, revision: 1, reason: "", campaignId: campaign?.id ?? null, autoWindow: null, updatedAt: new Date().toISOString(),
+    version, revision: 1, reason: "", campaignId: campaign?.id ?? null, autoWindow, updatedAt: new Date().toISOString(),
   };
   insert(db, workspace, row);
   return row;
@@ -220,6 +241,27 @@ export function saveVersion(workspace: string, creative: Creative, ref: VersionR
       updateStatus(db, workspace, row, "live", now);
     }
     return decode(row);
+  });
+}
+
+export function createRegenerationDraft(workspace: string, ref: VersionRef): Version {
+  return transaction(db => {
+    const source = find(db, workspace, ref.id, ref.revision);
+    const previous = decode(source);
+    const { lowCtr } = performance(previous);
+    if (source.status !== "live" || !lowCtr) throw new WorkflowError("notAllowed");
+
+    const existing = db.prepare("SELECT * FROM versions WHERE workspace = ? AND parentId = ? AND autoWindow = ?")
+      .get(workspace, source.id, lowCtr.window);
+    if (existing && existing.status !== "deleted") return decode(rowSchema.parse(existing));
+
+    const creative = regenerateCreative(previous.creative, listChoices(workspace));
+    if (!creative) throw new WorkflowError("notAllowed");
+    if (existing) {
+      db.prepare("UPDATE versions SET autoWindow = NULL WHERE workspace = ? AND id = ?")
+        .run(workspace, rowSchema.parse(existing).id);
+    }
+    return decode(newDraft(db, workspace, creative, source, lowCtr.window));
   });
 }
 

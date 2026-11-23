@@ -63,6 +63,19 @@
       "creativeLocale": "ru"
     },
     {
+      "id": "demo-tower-d",
+      "label": {
+        "ru": "Вышка · сбор припасов",
+        "en": "Watchtower · scavenging"
+      },
+      "copyId": "survival-ha-pack",
+      "characterId": null,
+      "status": "live",
+      "campaignId": "survival-october",
+      "creativeLocale": "ru",
+      "platforms": ["instagram"]
+    },
+    {
       "id": "demo-tower-b",
       "label": {
         "ru": "Вышка · без персонажа",
@@ -127,6 +140,22 @@
       "impressions": 900,
       "clicks": 27,
       "installs": 2
+    },
+    {
+      "date": "2026-10-28",
+      "closed": true,
+      "adId": "demo-tower-d",
+      "impressions": 10000,
+      "clicks": 30,
+      "installs": 3
+    },
+    {
+      "date": "2026-10-29",
+      "closed": true,
+      "adId": "demo-tower-d",
+      "impressions": 10000,
+      "clicks": 30,
+      "installs": 3
     }
   ]
 }

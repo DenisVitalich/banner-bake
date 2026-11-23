@@ -145,12 +145,23 @@ export function Editor({ locale, today, initial, versions, uploads, choices, bac
         </div>
       </aside>
       <section className="panel publication-actions" aria-label={t(locale, "publish")}>
+        <div className="regeneration-option">
+          <label>
+            <input type="checkbox" checked={value.autoRegenerate} disabled={busy} aria-describedby="auto-regenerate-hint"
+              onChange={event => patch({ autoRegenerate: event.target.checked })} />
+            {t(locale, "autoRegenerate")}
+          </label>
+          <p id="auto-regenerate-hint">{t(locale, "autoRegenerateHint")}</p>
+        </div>
         {!draft && <p>{t(locale, "inherited")} {status === "live" && t(locale, "editActive")}</p>}
         <div className="publication-buttons">
           <button className="button secondary" disabled={busy || (!draft && !dirty)}
             onClick={() => perform(() => save(false), "saveFailed")}>{t(locale, "save")}</button>
           <button className="button primary" aria-haspopup="dialog" disabled={busy || (!draft && !dirty)}
-            onClick={previewLaunch}>{t(locale, "launch")}</button>
+            onClick={event => {
+              event.currentTarget.focus();
+              previewLaunch();
+            }}>{t(locale, "launch")}</button>
         </div>
       </section>
     </div>

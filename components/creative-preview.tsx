@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useRef, useState, type MouseEvent, type ReactNode } from "react";
 import type { Locale } from "../lib/catalog";
 import { ApiError, api } from "../lib/client";
 import { deliveryActions, publication, type Creative, type DeliveryAction, type Version } from "../lib/model";
@@ -9,11 +9,25 @@ function showModal(dialog: HTMLDialogElement | null): void {
   if (dialog && !dialog.open) dialog.showModal();
 }
 
+function isBackdrop(event: MouseEvent<HTMLDialogElement>): boolean {
+  if (event.target !== event.currentTarget) return false;
+  const { left, right, top, bottom } = event.currentTarget.getBoundingClientRect();
+  return event.clientX < left || event.clientX >= right || event.clientY < top || event.clientY >= bottom;
+}
+
 export function PostDialog({ creative, locale, game, version, busy, close, children }: {
   creative: Creative; locale: Locale; game: string; version?: Version; busy: boolean; close: () => void; children: ReactNode;
 }): React.JSX.Element {
   const title = creative.headline || t(locale, "noTitle");
-  return <dialog ref={showModal} className="creative-dialog" aria-labelledby="creative-preview-title" onClose={close}
+  const hasPlacement = creative.platforms.length > 0;
+  const startedOnBackdrop = useRef(false);
+  return <dialog ref={showModal} className={hasPlacement ? "creative-dialog creative-dialog-placement" : "creative-dialog"}
+    aria-labelledby="creative-preview-title" onClose={close}
+    onPointerDown={event => { startedOnBackdrop.current = isBackdrop(event); }}
+    onClick={event => {
+      if (startedOnBackdrop.current && !busy && isBackdrop(event)) event.currentTarget.close();
+      startedOnBackdrop.current = false;
+    }}
     onCancel={event => { if (busy) event.preventDefault(); }}>
     <div className="creative-dialog-header">
       <div className="creative-dialog-heading">
@@ -29,16 +43,10 @@ export function PostDialog({ creative, locale, game, version, busy, close, child
     </div>
     <div className="creative-dialog-body">
       <PlacementPreview creative={creative} locale={locale} game={game} />
-      <section className="creative-dialog-post">
-        {!creative.platforms.length && <>
-          <h3>{t(locale, "postPreview")}</h3>
-          <p lang={creative.post.trim() ? creative.locale : locale}>{creative.post.trim() ? publication(creative) : t(locale, "postEmpty")}</p>
-        </>}
-        {creative.platforms.length > 0 && <div className="dialog-platforms">
-          <h3>{t(locale, "platforms")}</h3>
-          <ul>{creative.platforms.map(platform => <li className="pill" key={platform}>{t(locale, `platform-${platform}`)}</li>)}</ul>
-        </div>}
-      </section>
+      {!hasPlacement && <section className="creative-dialog-post">
+        <h3>{t(locale, "postPreview")}</h3>
+        <p lang={creative.post.trim() ? creative.locale : locale}>{creative.post.trim() ? publication(creative) : t(locale, "postEmpty")}</p>
+      </section>}
     </div>
     <div className="creative-dialog-footer">{children}</div>
   </dialog>;

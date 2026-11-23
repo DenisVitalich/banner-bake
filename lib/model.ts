@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { campaignType, catalog, dateSchema, localeSchema, type Locale } from "./catalog";
+import { campaignType, catalog, dateSchema, localeSchema, platformSchema, type Locale } from "./catalog";
 import { availableChoices, defaultChoices, type Choices } from "./choices";
+export { platformSchema } from "./catalog";
 
 export const statusSchema = z.enum(["draft", "live", "paused", "stopped", "replaced", "deleted"]);
 export const actionSchema = z.enum(["pause", "resume", "stop", "delete"]);
-export const platformSchema = z.enum(["landing", "game", "steam", "instagram"]);
 export const exportFormatSchema = z.enum(["png", "html", "txt"]);
 export type Status = z.infer<typeof statusSchema>;
 export type DeliveryAction = z.infer<typeof actionSchema>;
@@ -30,6 +30,7 @@ export const creativeSchema = z.object({
   characterId: z.string().nullable(), uploadId: z.uuid().nullable(),
   locale: localeSchema, type: campaignType, publicationId: z.string().nullable().default(null),
   platforms: z.array(platformSchema).max(4).refine(items => items.length === new Set(items).size).default([]),
+  autoRegenerate: z.boolean().default(false),
   flightStart: date, flightEnd: date, offerStart: date, offerEnd: date,
   offer: z.string().max(500), prize: z.string().max(500), entryRules: z.string().max(1000),
   headline: z.string().max(100), post: z.string().max(3000), cta: z.string().max(30),
@@ -39,6 +40,7 @@ export type Field = keyof Creative;
 export type Errors = Partial<Record<Field, "required" | "badDates" | "invalid">>;
 export type Version = {
   id: string;
+  rootId: string;
   parentId: string | null;
   version: number;
   revision: number;
@@ -64,7 +66,7 @@ export function emptyCreative(locale: Locale, today = localDate(), choices = def
     themeId: availableChoices(choices, "theme")[0]?.id ?? "",
     backgroundId: "", characterId: null, uploadId: null, locale,
     type: publication?.behavior ?? "announcement", publicationId: publication?.id ?? null,
-    platforms: [], flightStart: today, flightEnd: today,
+    platforms: [], autoRegenerate: true, flightStart: today, flightEnd: today,
     offerStart: "", offerEnd: "", offer: "", prize: "", entryRules: "", headline: "", post: "", cta: "",
   };
 }

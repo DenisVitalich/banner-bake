@@ -2,9 +2,11 @@ import { demo } from "./catalog";
 import type { Version } from "./model";
 
 export type Totals = { impressions: number; clicks: number; installs: number };
+type LowCtr = { peerCtr: number; window: string };
 export type Performance = {
   totals: Totals;
   shortfall: "periods" | "volume" | null;
+  lowCtr: LowCtr | null;
 };
 
 function sum(rows: Totals[]): Totals {
@@ -32,10 +34,20 @@ export function performance(version: Version): Performance {
   const consecutive = dates.every((date, index) => index === 0 ||
     Date.parse(date) - Date.parse(dates[index - 1]) === 86_400_000);
   if (!consecutive || available.length < rules.requiredConsecutiveClosedPeriods) {
-    return { totals, shortfall: "periods" };
+    return { totals, shortfall: "periods", lowCtr: null };
   }
-  if (available.some(period => !period.clicks || period.impressions < rules.minImpressionsPerPeriod || period.installs < rules.minInstallsPerPeriod)) {
-    return { totals, shortfall: "volume" };
-  }
-  return { totals, shortfall: null };
+  const peers = dates.map(date => sum(closed.filter(period => period.date === date &&
+    period.adId !== version.id && period.impressions >= rules.minImpressionsPerPeriod)));
+  const belowPeers = available.every((period, index) => {
+    const dailyPeers = peers[index];
+    return period.impressions >= rules.minImpressionsPerPeriod && dailyPeers.clicks > 0 &&
+      period.clicks / period.impressions < dailyPeers.clicks / dailyPeers.impressions / 2;
+  });
+  const cohort = sum(peers);
+  const peerCtr = ratio(cohort.clicks, cohort.impressions);
+  const lowCtr = belowPeers && peerCtr !== null ? { peerCtr, window: `ctr:${dates.join("/")}` } : null;
+  const shortfall = available.some(period =>
+    !period.clicks || period.impressions < rules.minImpressionsPerPeriod || period.installs < rules.minInstallsPerPeriod
+  ) ? "volume" : null;
+  return { totals, shortfall, lowCtr };
 }

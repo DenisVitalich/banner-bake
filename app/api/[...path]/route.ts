@@ -7,13 +7,14 @@ import { choiceChangeSchema } from "../../../lib/choices";
 import { actionSchema, creativeSchema, exportFormatSchema, validateCreative, type Upload } from "../../../lib/model";
 import { artPath, renderBanner } from "../../../lib/banner";
 import { exportPost } from "../../../lib/post-export";
-import { changeChoices, health, listChoices, listUploads, listVersions, readBanner, readChoiceArt, readUpload, saveUpload, saveVersion, transition, WorkflowError } from "../../../lib/store";
+import { changeChoices, createRegenerationDraft, health, listChoices, listUploads, listVersions, readBanner, readChoiceArt, readUpload, resetDemoVersions, saveUpload, saveVersion, transition, WorkflowError } from "../../../lib/store";
 
 export const runtime = "nodejs";
 type Context = { params: Promise<{ path: string[] }> };
 const ref = z.object({ id: z.string().max(80), revision: z.number().int().positive() });
 const saveBody = z.object({ creative: creativeSchema, ref: ref.nullable() });
 const transitionBody = ref.extend({ action: actionSchema });
+const resetDemoBody = z.object({ confirm: z.literal(true) });
 const exportBody = z.object({ creative: creativeSchema, format: exportFormatSchema });
 const maxUpload = 8 * 1024 * 1024;
 const maxJson = 64 * 1024;
@@ -117,6 +118,11 @@ export async function POST(request: NextRequest, context: Context): Promise<Resp
     const owner = workspace(request);
     switch (route) {
       case "choices": return NextResponse.json(changeChoices(owner, choiceChangeSchema.parse(await readJson(request))));
+      case "regenerate": return NextResponse.json(createRegenerationDraft(owner, ref.parse(await readJson(request))));
+      case "reset-demo": {
+        resetDemoBody.parse(await readJson(request));
+        return NextResponse.json(resetDemoVersions(owner));
+      }
       case "save":
       case "launch": {
         const { creative, ref } = saveBody.parse(await readJson(request));

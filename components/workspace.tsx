@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Locale } from "../lib/catalog";
 import type { Choices } from "../lib/choices";
 import type { Upload, Version } from "../lib/model";
@@ -27,6 +27,8 @@ export function Workspace(props: Props): React.JSX.Element {
   const [versions, setVersions] = useState(props.versions);
   const [uploads, setUploads] = useState(props.uploads);
   const [game, setGame] = useState("");
+  const [regeneratingId, setRegeneratingId] = useState<string>();
+  const demoResetCount = useRef(0);
   const screen = editor.id;
   const existing = versions.find(version => version.id === screen);
 
@@ -65,7 +67,7 @@ export function Workspace(props: Props): React.JSX.Element {
   function upsert(version: Version): void {
     setVersions(current => current.some(item => item.id === version.id)
       ? current.map(item => item.id === version.id ? version : item)
-      : [...current, version]);
+      : [version, ...current]);
   }
 
   function updated(version: Version): void {
@@ -78,7 +80,9 @@ export function Workspace(props: Props): React.JSX.Element {
   }
 
   async function refresh(): Promise<void> {
+    const resetCount = demoResetCount.current;
     const result = await api<{ versions: Version[]; uploads: Upload[]; choices: Choices }>("workspace");
+    if (resetCount !== demoResetCount.current) return;
     setVersions(result.versions);
     setUploads(result.uploads);
     setChoices(result.choices);
@@ -100,6 +104,34 @@ export function Workspace(props: Props): React.JSX.Element {
     window.scrollTo(0, 0);
     notify("launched");
     void refresh().catch(() => undefined);
+  }
+
+  async function regenerate(version: Version): Promise<void> {
+    if (regeneratingId) return;
+    setRegeneratingId(version.id);
+    const origin = location.href;
+    try {
+      const [draft] = await Promise.all([
+        api<Version>("regenerate", { id: version.id, revision: version.revision }),
+        // The local demo responds immediately. Keep the loading state visible before opening the draft.
+        new Promise<void>(resolve => window.setTimeout(resolve, 1200)),
+      ]);
+      upsert(draft);
+      if (location.href === origin) open(draft.id);
+      notify("regeneratedDraftReady");
+    } catch {
+      notify("regenerationFailed", "error");
+    } finally {
+      setRegeneratingId(undefined);
+    }
+  }
+
+  async function resetDemo(): Promise<void> {
+    const restored = await api<Version[]>("reset-demo", { confirm: true });
+    demoResetCount.current += 1;
+    setVersions(restored);
+    window.scrollTo(0, 0);
+    notify("demoResetDone");
   }
 
   return <>
@@ -134,7 +166,8 @@ export function Workspace(props: Props): React.JSX.Element {
           versions={versions} uploads={uploads} choices={choices} addUpload={addUpload}
           back={() => open(null)} updated={updated} launched={launched} notify={notify} />
         : <Dashboard locale={locale} versions={versions} choices={choices} game={game} setGame={setGame}
-            create={() => open("new")} open={open} launched={launched} refresh={refresh} notify={notify} />}
+            create={() => open("new")} open={open} launched={launched} regenerate={regenerate} regeneratingId={regeneratingId}
+            resetDemo={resetDemo} refresh={refresh} notify={notify} />}
     <Toast notice={notice} locale={locale} dismiss={setNotice} />
   </>;
 }
